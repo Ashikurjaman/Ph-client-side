@@ -1,25 +1,20 @@
-import { Button, Layout, Menu, MenuProps } from "antd";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { createElement, useState } from "react";
+import { Button, Layout, Menu } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { adminSideBar } from "../../routes/admin.routes";
 const { Header, Content, Footer, Sider } = Layout;
 
-const items: MenuProps["items"] = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: createElement(icon),
-  label: `nav ${index + 1}`,
-}));
+// const items: MenuProps["items"] = [
+//   UserOutlined,
+//   VideoCameraOutlined,
+//   UploadOutlined,
+//   UserOutlined,
+// ].map((icon, index) => ({
+//   key: String(index + 1),
+//   icon: createElement(icon),
+//   label: `nav ${index + 1}`,
+// }));
 
 export default function MainLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -50,7 +45,7 @@ export default function MainLayout() {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={items}
+          items={adminSideBar}
         />
       </Sider>
       <Layout>
