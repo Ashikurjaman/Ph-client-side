@@ -7,11 +7,12 @@ import { NavLink } from "react-router-dom";
 
 type TRoute = {
   path: string;
-  element?: ReactNode;
+  element: ReactNode;
 };
 type TSidebar = {
-  key: string;
-  label: ReactNode;
+  key?: string;
+  path?: string;
+  label?: ReactNode;
   children?: TSidebar[];
 };
 const adminPaths = [
@@ -42,37 +43,41 @@ const adminPaths = [
   },
 ];
 
-export const adminRoutes = adminPaths.reduce((acc: TRoute[], items) => {
-  if (items.path && items.element) {
+export const adminRoutes = adminPaths.reduce((acc: TRoute[], item) => {
+  if (item.path && item.element) {
+    // Add top-level routes
     acc.push({
-      path: items.path,
-      element: items.element,
+      path: item.path,
+      element: item.element,
     });
-
-    if (items.children) {
-      acc.forEach((child) => {
-        acc.push({
-          path: child.path,
-          element: child.element,
-        });
-      });
-    }
   }
+
+  if (item.children) {
+    // Add nested routes
+    item.children.forEach((child) => {
+      acc.push({
+        path: child.path,
+        element: child.element,
+      });
+    });
+  }
+
   return acc;
 }, []);
 
-export const adminSideBar = adminPaths.reduce((acc: TSidebar[], items) => {
-  if (items.path && items.name) {
+export const adminSideBar = adminPaths.reduce((acc: TSidebar[], item) => {
+  if (item.path && item.name) {
     acc.push({
-      key: items.name,
-      label: <NavLink to={`/admin/${items.path}`}>{items.name}</NavLink>,
+      key: item.name,
+      label: <NavLink to={`/admin/${item.path}`}>{item.name}</NavLink>,
     });
   }
-  if (items.children) {
+
+  if (item.children) {
     acc.push({
-      key: items.name,
-      label: items.name,
-      children: items.children.map((child) => ({
+      key: item.name,
+      label: item.name,
+      children: item.children.map((child) => ({
         key: child.name,
         label: <NavLink to={`/admin/${child.path}`}>{child.name}</NavLink>,
       })),
