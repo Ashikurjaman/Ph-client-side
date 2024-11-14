@@ -1,54 +1,17 @@
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { adminSideBar } from "../../routes/admin.routes";
-const { Header, Content, Footer, Sider } = Layout;
+import Sidebar from "./Sidebar";
 
-// const items: MenuProps["items"] = [
-//   UserOutlined,
-//   VideoCameraOutlined,
-//   UploadOutlined,
-//   UserOutlined,
-// ].map((icon, index) => ({
-//   key: String(index + 1),
-//   icon: createElement(icon),
-//   label: `nav ${index + 1}`,
-// }));
+const { Header, Content, Footer } = Layout;
 
 export default function MainLayout() {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-      >
-        <div
-          style={{
-            color: "white",
-            height: "4rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <h1>Ph University</h1>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={adminSideBar}
-        />
-      </Sider>
       <Layout>
+        <Sidebar />
         <Header style={{ padding: 0 }} />
         <Button
           type="text"
